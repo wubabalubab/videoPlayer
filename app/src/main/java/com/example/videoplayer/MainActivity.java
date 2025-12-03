@@ -51,7 +51,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onEvents(Player player, Player.Events events) {
                 Player.Listener.super.onEvents(player, events);
-                Log.e(TAG, "onEvents: "+events.toString() );
+                for (int i = 0; i < events.size(); i++) {
+                    // Player .EVENT_TIMELINE_CHANGED
+                    Log.e(TAG, "onEvents: "+events.get(i) );
+                }
+
             }
         });
         MediaItem mediaItem = MediaItem.fromUri(url);
@@ -61,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private static final String TAG = "MainActivity";
+
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.tv_loadurl) {
