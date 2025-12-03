@@ -72,7 +72,7 @@ import java.util.Arrays;
   }
 
   @Override
-  (expression = "#3.format", result = false)
+
   protected boolean readHeaders(ParsableByteArray packet, long position, SetupData setupData) {
     byte[] data = packet.getData();
     @Nullable FlacStreamMetadata streamMetadata = this.streamMetadata;

@@ -110,6 +110,8 @@ import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.MoreExecutors;
 import com.google.common.util.concurrent.SettableFuture;
+
+
 import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.File;
@@ -482,9 +484,6 @@ public final class Util {
    */
   @UnstableApi
   @Deprecated
-  (
-      replacement = "Objects.equals(o1, o2)",
-      imports = {"java.util.Objects"})
   public static boolean areEqual(@Nullable Object o1, @Nullable Object o2) {
     return Objects.equals(o1, o2);
   }
@@ -718,7 +717,7 @@ public final class Util {
    * @throws IllegalStateException If the current thread doesn't have a {@link Looper}.
    */
   @UnstableApi
-  public static Handler createHandlerForCurrentLooper(Callback callback) {
+  public static Handler createHandlerForCurrentLooper(Handler.Callback callback) {
     return createHandler(Assertions.checkStateNotNull(Looper.myLooper()), callback);
   }
 
@@ -749,7 +748,7 @@ public final class Util {
    */
   @UnstableApi
   public static Handler createHandlerForCurrentOrMainLooper(
-      Callback callback) {
+      Handler.Callback callback) {
     return createHandler(getCurrentOrMainLooper(), callback);
   }
 
@@ -768,7 +767,7 @@ public final class Util {
   @UnstableApi
   @SuppressWarnings({"nullness:argument", "nullness:return"})
   public static Handler createHandler(
-      Looper looper,  Callback callback) {
+      Looper looper,  Handler.Callback callback) {
     return new Handler(looper, callback);
   }
 
@@ -3522,7 +3521,7 @@ public final class Util {
    * @param newFromIndex The new from index.
    */
   @UnstableApi
-  public static <T extends @NonNull Object> void moveItems(
+  public static <T extends  Object> void moveItems(
       List<T> items, int fromIndex, int toIndex, int newFromIndex) {
     ArrayDeque<T> removedItems = new ArrayDeque<>();
     int removedItemsLength = toIndex - fromIndex;

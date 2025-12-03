@@ -52,7 +52,7 @@ public class SystemClock implements Clock {
   @Override
   @SuppressWarnings({"nullness:argument", "nullness:return"})
   public HandlerWrapper createHandler(
-      Looper looper, @Nullable @UnknownInitialization Callback callback) {
+      Looper looper, @Nullable  Handler.Callback callback) {
     return new SystemHandlerWrapper(new Handler(looper, callback));
   }
 

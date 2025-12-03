@@ -708,7 +708,7 @@ public final class MimeTypes {
    * @return The normalized MIME type, or the argument MIME type if its normalized form is unknown.
    */
   @UnstableApi
-  public static @PolyNull String normalizeMimeType(@PolyNull String mimeType) {
+  public static  String normalizeMimeType( String mimeType) {
     if (mimeType == null) {
       return null;
     }

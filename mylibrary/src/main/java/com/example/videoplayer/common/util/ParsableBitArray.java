@@ -22,7 +22,7 @@ import java.nio.charset.StandardCharsets;
 
 /** Wraps a byte array, providing methods that allow it to be read as a bitstream. */
 @UnstableApi
-@CheckReturnValue
+
 public final class ParsableBitArray {
 
   public byte[] data;

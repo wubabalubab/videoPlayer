@@ -92,7 +92,7 @@ import java.util.Arrays;
   }
 
   @Override
-  (expression = "#3.format", result = false)
+
   protected boolean readHeaders(ParsableByteArray packet, long position, SetupData setupData)
       throws IOException {
     if (vorbisSetup != null) {

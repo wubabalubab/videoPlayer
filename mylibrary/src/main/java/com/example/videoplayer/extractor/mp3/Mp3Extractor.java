@@ -42,7 +42,6 @@ import com.example.videoplayer.extractor.Id3Peeker;
 import com.example.videoplayer.extractor.MpegAudioUtil;
 import com.example.videoplayer.extractor.PositionHolder;
 import com.example.videoplayer.extractor.TrackOutput;
-import com.example.videoplayer.extractor.metadata.id3.Id3Decoder;
 import com.example.videoplayer.extractor.metadata.id3.Id3Decoder.FramePredicate;
 import com.example.videoplayer.extractor.metadata.id3.MlltFrame;
 import com.example.videoplayer.extractor.metadata.id3.TextInformationFrame;

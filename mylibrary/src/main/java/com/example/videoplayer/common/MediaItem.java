@@ -760,9 +760,7 @@ public final class MediaItem {
       
       @UnstableApi
       @Deprecated
-      (
-          replacement =
-              "this.setForceSessionsForAudioAndVideoTracks(forceSessionsForAudioAndVideoTracks)")
+
       public Builder forceSessionsForAudioAndVideoTracks(
           boolean forceSessionsForAudioAndVideoTracks) {
         return setForceSessionsForAudioAndVideoTracks(forceSessionsForAudioAndVideoTracks);

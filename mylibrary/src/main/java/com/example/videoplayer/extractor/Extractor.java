@@ -145,7 +145,7 @@ public interface Extractor {
    * <p>{@code Extractor} implementations that operate by delegating to another {@code Extractor}
    * should override this method to return that delegate.
    */
-  @SideEffectFree
+
   default Extractor getUnderlyingImplementation() {
     return this;
   }

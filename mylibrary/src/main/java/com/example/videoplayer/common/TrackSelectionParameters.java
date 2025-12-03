@@ -147,7 +147,6 @@ public class TrackSelectionParameters {
      * @deprecated Use {@link #Builder()} instead.
      */
     @Deprecated
-    (replacement = "this()")
     public Builder(Context context) {
       this();
     }

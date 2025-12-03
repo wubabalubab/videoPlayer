@@ -35,7 +35,6 @@ import java.util.Arrays;
  * parsed with the assumption that their constituent bytes are in big endian order.
  */
 @UnstableApi
-@CheckReturnValue
 public final class ParsableByteArray {
 
   /** A value that is outside the valid range of unicode code points. */

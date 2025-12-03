@@ -677,7 +677,7 @@ public final class PlaybackVideoGraphWrapper implements VideoGraph.Listener {
   }
 
   /** Receives input from an ExoPlayer renderer and forwards it to the video graph. */
-  private final class InputVideoSink implements VideoSink, Listener {
+  private final class InputVideoSink implements VideoSink, PlaybackVideoGraphWrapper.Listener {
 
     private final int videoFrameProcessorMaxPendingFrameCount;
     private final int inputIndex;
@@ -724,7 +724,7 @@ public final class PlaybackVideoGraphWrapper implements VideoGraph.Listener {
     }
 
     @Override
-    public void setListener(PlaybackVideoGraphWrapper.Listener listener, Executor executor) {
+    public void setListener(Listener listener, Executor executor) {
       this.listener = listener;
       listenerExecutor = executor;
     }

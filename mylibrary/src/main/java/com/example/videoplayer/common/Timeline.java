@@ -1163,7 +1163,6 @@ public abstract class Timeline {
    */
   @UnstableApi
   @Deprecated
-  (replacement = "this.getPeriodPositionUs(window, period, windowIndex, windowPositionUs)")
   public final Pair<Object, Long> getPeriodPosition(
       Window window, Period period, int windowIndex, long windowPositionUs) {
     return getPeriodPositionUs(window, period, windowIndex, windowPositionUs);
@@ -1175,10 +1174,7 @@ public abstract class Timeline {
   @UnstableApi
   @Deprecated
   @Nullable
-  (
-      replacement =
-          "this.getPeriodPositionUs("
-              + "window, period, windowIndex, windowPositionUs, defaultPositionProjectionUs)")
+
   public final Pair<Object, Long> getPeriodPosition(
       Window window,
       Period period,
@@ -1461,7 +1457,7 @@ public abstract class Timeline {
             : shuffledWindowIndices);
   }
 
-  private static <T extends @NonNull Object> ImmutableList<T> fromBundleListRetriever(
+  private static <T extends  Object> ImmutableList<T> fromBundleListRetriever(
       Function<Bundle, T> fromBundleFunc, @Nullable IBinder binder) {
     if (binder == null) {
       return ImmutableList.of();

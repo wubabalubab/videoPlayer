@@ -20,8 +20,10 @@ import static java.lang.Math.max;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.media.ExifInterface;
+
 import androidx.annotation.Nullable;
-import androidx.exifinterface.media.ExifInterface;
+
 import com.example.videoplayer.common.C;
 import com.example.videoplayer.common.ParserException;
 import com.example.videoplayer.common.util.UnstableApi;
@@ -82,7 +84,21 @@ public final class BitmapUtil {
     try (InputStream inputStream = new ByteArrayInputStream(data)) {
       exifInterface = new ExifInterface(inputStream);
     }
-    int rotationDegrees = exifInterface.getRotationDegrees();
+    int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION,
+            ExifInterface.ORIENTATION_NORMAL);
+    int degree = 0;
+    switch (orientation) {
+      case ExifInterface.ORIENTATION_ROTATE_90:
+        degree = 90;
+        break;
+      case ExifInterface.ORIENTATION_ROTATE_180:
+        degree = 180;
+        break;
+      case ExifInterface.ORIENTATION_ROTATE_270:
+        degree = 270;
+        break;
+    }
+    int rotationDegrees = degree;
     if (rotationDegrees != 0) {
       Matrix matrix = new Matrix();
       matrix.postRotate(rotationDegrees);

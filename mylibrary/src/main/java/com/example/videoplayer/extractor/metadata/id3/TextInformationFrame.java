@@ -56,9 +56,7 @@ public final class TextInformationFrame extends Id3Frame {
    *     instead
    */
   @Deprecated
-  (
-      replacement = "this(id, description, ImmutableList.of(value))",
-      imports = "com.google.common.collect.ImmutableList")
+
   public TextInformationFrame(String id, @Nullable String description, String value) {
     this(id, description, ImmutableList.of(value));
   }

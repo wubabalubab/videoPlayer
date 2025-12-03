@@ -107,7 +107,7 @@ public final class ServerSideAdInsertionMediaSource extends BaseMediaSource
 
   private final MediaSource mediaSource;
   private final ListMultimap<Pair<Long, Object>, SharedMediaPeriod> mediaPeriods;
-  private final EventDispatcher mediaSourceEventDispatcherWithoutId;
+  private final MediaSourceEventListener.EventDispatcher mediaSourceEventDispatcherWithoutId;
   private final DrmSessionEventListener.EventDispatcher drmEventDispatcherWithoutId;
   @Nullable private final AdPlaybackStateUpdater adPlaybackStateUpdater;
 
@@ -1119,7 +1119,7 @@ public final class ServerSideAdInsertionMediaSource extends BaseMediaSource
 
     public final SharedMediaPeriod sharedPeriod;
     public final MediaPeriodId mediaPeriodId;
-    public final EventDispatcher mediaSourceEventDispatcher;
+    public final MediaSourceEventListener.EventDispatcher mediaSourceEventDispatcher;
     public final DrmSessionEventListener.EventDispatcher drmEventDispatcher;
 
     public  Callback callback;
@@ -1130,7 +1130,7 @@ public final class ServerSideAdInsertionMediaSource extends BaseMediaSource
     public MediaPeriodImpl(
         SharedMediaPeriod sharedPeriod,
         MediaPeriodId mediaPeriodId,
-        EventDispatcher mediaSourceEventDispatcher,
+        MediaSourceEventListener.EventDispatcher mediaSourceEventDispatcher,
         DrmSessionEventListener.EventDispatcher drmEventDispatcher) {
       this.sharedPeriod = sharedPeriod;
       this.mediaPeriodId = mediaPeriodId;

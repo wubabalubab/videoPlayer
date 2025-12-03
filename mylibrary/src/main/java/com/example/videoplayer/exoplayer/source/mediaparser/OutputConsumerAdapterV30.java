@@ -31,7 +31,6 @@ import static android.media.MediaParser.PARSER_NAME_TS;
 import static android.media.MediaParser.PARSER_NAME_WAV;
 
 import android.media.DrmInitData.SchemeInitData;
-import android.media.MediaCodec;
 import android.media.MediaCodec.CryptoInfo;
 import android.media.MediaFormat;
 import android.media.MediaParser;

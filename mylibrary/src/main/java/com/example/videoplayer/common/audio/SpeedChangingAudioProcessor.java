@@ -374,7 +374,7 @@ public final class SpeedChangingAudioProcessor implements AudioProcessor {
    * @param shouldResetSpeed Whether {@link #currentSpeed} should be reset to its default value.
    */
   private void resetInternalState(
-      @UnknownInitialization SpeedChangingAudioProcessor this, boolean shouldResetSpeed) {
+       SpeedChangingAudioProcessor this, boolean shouldResetSpeed) {
     if (shouldResetSpeed) {
       currentSpeed = 1f;
     }

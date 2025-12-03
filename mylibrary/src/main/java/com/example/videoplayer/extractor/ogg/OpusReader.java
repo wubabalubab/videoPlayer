@@ -57,7 +57,7 @@ import java.util.List;
   }
 
   @Override
-  (expression = "#3.format", result = false)
+
   protected boolean readHeaders(ParsableByteArray packet, long position, SetupData setupData)
       throws ParserException {
     if (peekPacketStartsWith(packet, OPUS_ID_HEADER_SIGNATURE)) {

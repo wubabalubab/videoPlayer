@@ -42,7 +42,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
  * @param <T> The listener type.
  */
 @UnstableApi
-public final class ListenerSet<T extends @NonNull Object> {
+public final class ListenerSet<T extends  Object> {
 
   /**
    * An event sent to a listener.
@@ -311,7 +311,7 @@ public final class ListenerSet<T extends @NonNull Object> {
     checkState(Thread.currentThread() == handler.getLooper().getThread());
   }
 
-  private static final class ListenerHolder<T extends @NonNull Object> {
+  private static final class ListenerHolder<T extends  Object> {
 
     public final T listener;
 

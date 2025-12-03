@@ -56,7 +56,7 @@ public interface Clock {
    * @see Handler#Handler(Looper, Handler.Callback)
    */
   HandlerWrapper createHandler(
-      Looper looper, @Nullable Handler.@UnknownInitialization Callback callback);
+      Looper looper, @Nullable Handler.Callback callback);
 
   /**
    * Notifies the clock that the current thread is about to be blocked and won't return until a

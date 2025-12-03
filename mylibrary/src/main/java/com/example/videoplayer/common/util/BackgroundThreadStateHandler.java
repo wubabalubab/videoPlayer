@@ -29,7 +29,7 @@ import com.google.common.base.Function;
  *     Object#equals(Object)}.
  */
 @UnstableApi
-public final class BackgroundThreadStateHandler<T extends @NonNull Object> {
+public final class BackgroundThreadStateHandler<T extends  Object> {
 
   /**
    * An interface to handle changes to the state on the foreground thread.
@@ -37,7 +37,7 @@ public final class BackgroundThreadStateHandler<T extends @NonNull Object> {
    * @param <T> An immutable object representing the entire state. Must implement {@link
    *     Object#equals(Object)}.
    */
-  public interface StateChangeListener<T extends @NonNull Object> {
+  public interface StateChangeListener<T extends  Object> {
 
     /**
      * The state has changed.

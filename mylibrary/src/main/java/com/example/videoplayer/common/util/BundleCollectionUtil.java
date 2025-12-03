@@ -41,7 +41,7 @@ public final class BundleCollectionUtil {
    * @param toBundleFunc Function that specifies how to bundle each item.
    * @return The {@link ImmutableList} of bundled items.
    */
-  public static <T extends @NonNull Object> ImmutableList<Bundle> toBundleList(
+  public static <T extends  Object> ImmutableList<Bundle> toBundleList(
       List<T> list, Function<T, Bundle> toBundleFunc) {
     ImmutableList.Builder<Bundle> builder = ImmutableList.builder();
     for (int i = 0; i < list.size(); i++) {
@@ -58,7 +58,7 @@ public final class BundleCollectionUtil {
    * @param bundleList List of {@link Bundle} instances to be unbundled.
    * @return The {@link ImmutableList} of unbundled items.
    */
-  public static <T extends @NonNull Object> ImmutableList<T> fromBundleList(
+  public static <T extends  Object> ImmutableList<T> fromBundleList(
       Function<Bundle, T> fromBundleFunc, List<Bundle> bundleList) {
     ImmutableList.Builder<T> builder = ImmutableList.builder();
     for (int i = 0; i < bundleList.size(); i++) {
@@ -79,7 +79,7 @@ public final class BundleCollectionUtil {
    * @return The {@link ArrayList} of bundled items.
    */
   @SuppressWarnings("NonApiType") // Intentionally using ArrayList for putParcelableArrayList.
-  public static <T extends @NonNull Object> ArrayList<Bundle> toBundleArrayList(
+  public static <T extends  Object> ArrayList<Bundle> toBundleArrayList(
       Collection<T> items, Function<T, Bundle> toBundleFunc) {
     ArrayList<Bundle> arrayList = new ArrayList<>(items.size());
     for (T item : items) {
@@ -96,7 +96,7 @@ public final class BundleCollectionUtil {
    * @param bundleSparseArray {@link SparseArray} of {@link Bundle} instances to be unbundled.
    * @return The {@link SparseArray} of unbundled items.
    */
-  public static <T extends @NonNull Object> SparseArray<T> fromBundleSparseArray(
+  public static <T extends  Object> SparseArray<T> fromBundleSparseArray(
       Function<Bundle, T> fromBundleFunc, SparseArray<Bundle> bundleSparseArray) {
     SparseArray<T> result = new SparseArray<>(bundleSparseArray.size());
     for (int i = 0; i < bundleSparseArray.size(); i++) {
@@ -114,7 +114,7 @@ public final class BundleCollectionUtil {
    * @param toBundleFunc Function that specifies how to bundle each item.
    * @return The {@link SparseArray} of bundled items.
    */
-  public static <T extends @NonNull Object> SparseArray<Bundle> toBundleSparseArray(
+  public static <T extends  Object> SparseArray<Bundle> toBundleSparseArray(
       SparseArray<T> items, Function<T, Bundle> toBundleFunc) {
     SparseArray<Bundle> sparseArray = new SparseArray<>(items.size());
     for (int i = 0; i < items.size(); i++) {

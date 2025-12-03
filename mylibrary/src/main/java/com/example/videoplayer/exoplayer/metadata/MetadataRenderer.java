@@ -285,7 +285,7 @@ public final class MetadataRenderer extends BaseRenderer implements Callback {
     output.onMetadata(metadata);
   }
 
-  @SideEffectFree
+
   private long getPresentationTimeUs(long positionUs) {
     checkState(positionUs != C.TIME_UNSET);
     checkState(outputStreamOffsetUs != C.TIME_UNSET);

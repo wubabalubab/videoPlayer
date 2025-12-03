@@ -1768,9 +1768,7 @@ public final class C {
    * @deprecated Use {@link Util#usToMs(long)}.
    */
   @UnstableApi
-  (
-      replacement = "Util.usToMs(timeUs)",
-      imports = {"com.example.videoplayer.common.util.Util"})
+
   @Deprecated
   public static long usToMs(long timeUs) {
     return Util.usToMs(timeUs);
@@ -1780,9 +1778,7 @@ public final class C {
    * @deprecated Use {@link Util#msToUs(long)}.
    */
   @UnstableApi
-  (
-      replacement = "Util.msToUs(timeMs)",
-      imports = {"com.example.videoplayer.common.util.Util"})
+
   @Deprecated
   public static long msToUs(long timeMs) {
     return Util.msToUs(timeMs);
@@ -1792,9 +1788,7 @@ public final class C {
    * @deprecated Use {@link Util#generateAudioSessionIdV21(Context)}.
    */
   @UnstableApi
-  (
-      replacement = "Util.generateAudioSessionIdV21(context)",
-      imports = {"com.example.videoplayer.common.util.Util"})
+
   @Deprecated
   public static int generateAudioSessionIdV21(Context context) {
     return Util.generateAudioSessionIdV21(context);
@@ -1804,9 +1798,7 @@ public final class C {
    * @deprecated Use {@link Util#getFormatSupportString(int)}.
    */
   @UnstableApi
-  (
-      replacement = "Util.getFormatSupportString(formatSupport)",
-      imports = {"com.example.videoplayer.common.util.Util"})
+
   @Deprecated
   public static String getFormatSupportString(@FormatSupport int formatSupport) {
     return Util.getFormatSupportString(formatSupport);
@@ -1816,9 +1808,7 @@ public final class C {
    * @deprecated Use {@link Util#getErrorCodeForMediaDrmErrorCode(int)}.
    */
   @UnstableApi
-  (
-      replacement = "Util.getErrorCodeForMediaDrmErrorCode(mediaDrmErrorCode)",
-      imports = {"com.example.videoplayer.common.util.Util"})
+
   @Deprecated
   public static @PlaybackException.ErrorCode int getErrorCodeForMediaDrmErrorCode(
       int mediaDrmErrorCode) {
