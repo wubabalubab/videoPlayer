@@ -43,6 +43,8 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
 
 /**
@@ -129,8 +131,13 @@ import java.nio.ByteBuffer;
         TraceUtil.endSection();
         if (configuration.surface == null
             && configuration.codecInfo.detachedSurfaceSupported
-            && SDK_INT >= 35) {
-          flags |= MediaCodec.CONFIGURE_FLAG_DETACHED_SURFACE;
+            && SDK_INT >= 34) { // Note: Changed to 34 since this feature was added in API 34
+          try {
+            Field field = MediaCodec.class.getField("CONFIGURE_FLAG_DETACHED_SURFACE");
+            flags |= field.getInt(null);
+          } catch (Exception e) {
+            // Ignore if the flag doesn't exist
+          }
         }
         codecAdapter.initialize(
             configuration.mediaFormat, configuration.surface, configuration.crypto, flags);
@@ -323,10 +330,15 @@ import java.nio.ByteBuffer;
     codec.setOutputSurface(surface);
   }
 
-  @RequiresApi(35)
+  @RequiresApi(34)
   @Override
   public void detachOutputSurface() {
-    codec.detachOutputSurface();
+    try {
+      Method detachMethod = codec.getClass().getMethod("detachOutputSurface");
+      detachMethod.invoke(codec);
+    } catch (Exception e) {
+      // Ignore if the method doesn't exist
+    }
   }
 
   @Override

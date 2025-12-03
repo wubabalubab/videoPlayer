@@ -71,6 +71,8 @@ import com.example.videoplayer.exoplayer.mediacodec.MediaCodecUtil;
 import com.example.videoplayer.exoplayer.mediacodec.MediaCodecUtil.DecoderQueryException;
 import com.example.videoplayer.extractor.VorbisUtil;
 import com.google.common.collect.ImmutableList;
+
+import java.lang.reflect.Field;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.List;
@@ -1036,8 +1038,14 @@ public class MediaCodecAudioRenderer extends MediaCodecRenderer implements Media
     if (SDK_INT >= 32) {
       mediaFormat.setInteger(MediaFormat.KEY_MAX_OUTPUT_CHANNEL_COUNT, 99);
     }
-    if (SDK_INT >= 35) {
-      mediaFormat.setInteger(MediaFormat.KEY_IMPORTANCE, max(0, -rendererPriority));
+    if (SDK_INT >= 34) { // Changed to 34 since this feature was added in API 34
+      try {
+        Field field = MediaFormat.class.getField("KEY_IMPORTANCE");
+        String keyImportance = (String) field.get(null);
+        mediaFormat.setInteger(keyImportance, max(0, -rendererPriority));
+      } catch (Exception e) {
+        // Ignore if the key doesn't exist
+      }
     }
     return mediaFormat;
   }
@@ -1055,10 +1063,16 @@ public class MediaCodecAudioRenderer extends MediaCodecRenderer implements Media
       // If codec is null, then the importance will be set when initializing the codec.
       return;
     }
-    if (SDK_INT >= 35) {
-      Bundle codecParameters = new Bundle();
-      codecParameters.putInt(MediaFormat.KEY_IMPORTANCE, max(0, -rendererPriority));
-      codec.setParameters(codecParameters);
+    if (SDK_INT >= 34) { // Changed to 34 since this feature was added in API 34
+      try {
+        Field field = MediaFormat.class.getField("KEY_IMPORTANCE");
+        String keyImportance = (String) field.get(null);
+        Bundle codecParameters = new Bundle();
+        codecParameters.putInt(keyImportance, max(0, -rendererPriority));
+        codec.setParameters(codecParameters);
+      } catch (Exception e) {
+        // Ignore if the key doesn't exist
+      }
     }
   }
 

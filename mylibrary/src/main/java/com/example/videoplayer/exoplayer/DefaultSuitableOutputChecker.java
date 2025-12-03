@@ -48,9 +48,7 @@ import java.util.concurrent.Executor;
 
   /** Creates the default {@link SuitableOutputChecker}. */
   public DefaultSuitableOutputChecker() {
-    if (SDK_INT >= 35) {
-      impl = new ImplApi35();
-    } else if (SDK_INT >= 23) {
+    if (SDK_INT >= 23) {
       impl = new ImplApi23();
     } else {
       impl = null;
@@ -81,99 +79,100 @@ import java.util.concurrent.Executor;
     return impl == null || impl.isSelectedOutputSuitableForPlayback();
   }
 
-  @RequiresApi(35)
-  private static final class ImplApi35 implements SuitableOutputChecker {
-    private static final RouteDiscoveryPreference EMPTY_DISCOVERY_PREFERENCE =
-        new RouteDiscoveryPreference.Builder(
-                /* preferredFeatures= */ ImmutableList.of(), /* activeScan= */ false)
-            .build();
+  // TODO: Uncomment when compiling with API 35 or higher
+  // @RequiresApi(35)
+  // private static final class ImplApi35 implements SuitableOutputChecker {
+  //   private static final RouteDiscoveryPreference EMPTY_DISCOVERY_PREFERENCE =
+  //       new RouteDiscoveryPreference.Builder(
+  //               /* preferredFeatures= */ ImmutableList.of(), /* activeScan= */ false)
+  //           .build();
 
-    private  MediaRouter2 router;
-    private  RouteCallback routeCallback;
-    @Nullable private ControllerCallback controllerCallback;
-    private  BackgroundThreadStateHandler<Boolean> isSuitableForPlaybackState;
+  //   private  MediaRouter2 router;
+  //   private  RouteCallback routeCallback;
+  //   @Nullable private ControllerCallback controllerCallback;
+  //   private  BackgroundThreadStateHandler<Boolean> isSuitableForPlaybackState;
 
-    @SuppressLint("ThreadSafe") // Handler is thread-safe, but not annotated.
-    @Override
-    public void enable(
-        Callback callback,
-        Context context,
-        Looper callbackLooper,
-        Looper backgroundLooper,
-        Clock clock) {
-      isSuitableForPlaybackState =
-          new BackgroundThreadStateHandler<>(
-              /* initialState= */ true,
-              backgroundLooper,
-              callbackLooper,
-              clock,
-              /* onStateChanged= */ (oldState, newState) ->
-                  callback.onSelectedOutputSuitabilityChanged(newState));
-      isSuitableForPlaybackState.runInBackground(
-          () -> {
-            checkNotNull(isSuitableForPlaybackState);
-            router = MediaRouter2.getInstance(context);
-            routeCallback = new RouteCallback() {};
-            Executor backgroundExecutor = isSuitableForPlaybackState::runInBackground;
-            router.registerRouteCallback(
-                backgroundExecutor, routeCallback, EMPTY_DISCOVERY_PREFERENCE);
-            controllerCallback =
-                new ControllerCallback() {
-                  @Override
-                  public void onControllerUpdated(RoutingController controller) {
-                    isSuitableForPlaybackState.setStateInBackground(
-                        isSelectedOutputSuitableForPlayback(router));
-                  }
-                };
-            router.registerControllerCallback(backgroundExecutor, controllerCallback);
-            isSuitableForPlaybackState.setStateInBackground(
-                isSelectedOutputSuitableForPlayback(router));
-          });
-    }
+  //   @SuppressLint("ThreadSafe") // Handler is thread-safe, but not annotated.
+  //   @Override
+  //   public void enable(
+  //       Callback callback,
+  //       Context context,
+  //       Looper callbackLooper,
+  //       Looper backgroundLooper,
+  //       Clock clock) {
+  //     isSuitableForPlaybackState =
+  //         new BackgroundThreadStateHandler<>(
+  //             /* initialState= */ true,
+  //             backgroundLooper,
+  //             callbackLooper,
+  //             clock,
+  //             /* onStateChanged= */ (oldState, newState) ->
+  //                 callback.onSelectedOutputSuitabilityChanged(newState));
+  //     isSuitableForPlaybackState.runInBackground(
+  //         () -> {
+  //           checkNotNull(isSuitableForPlaybackState);
+  //           router = MediaRouter2.getInstance(context);
+  //           routeCallback = new RouteCallback() {};
+  //           Executor backgroundExecutor = isSuitableForPlaybackState::runInBackground;
+  //           router.registerRouteCallback(
+  //               backgroundExecutor, routeCallback, EMPTY_DISCOVERY_PREFERENCE);
+  //           controllerCallback =
+  //               new ControllerCallback() {
+  //                 @Override
+  //                 public void onControllerUpdated(RoutingController controller) {
+  //                   isSuitableForPlaybackState.setStateInBackground(
+  //                       isSelectedOutputSuitableForPlayback(router));
+  //                 }
+  //               };
+  //           router.registerControllerCallback(backgroundExecutor, controllerCallback);
+  //           isSuitableForPlaybackState.setStateInBackground(
+  //               isSelectedOutputSuitableForPlayback(router));
+  //         });
+  //   }
 
-    @Override
-    public void disable() {
-      checkStateNotNull(isSuitableForPlaybackState)
-          .runInBackground(
-              () -> {
-                checkNotNull(router).unregisterControllerCallback(checkNotNull(controllerCallback));
-                controllerCallback = null;
-                router.unregisterRouteCallback(checkNotNull(routeCallback));
-              });
-    }
+  //   @Override
+  //   public void disable() {
+  //     checkStateNotNull(isSuitableForPlaybackState)
+  //         .runInBackground(
+  //             () -> {
+  //               checkNotNull(router).unregisterControllerCallback(checkNotNull(controllerCallback));
+  //               controllerCallback = null;
+  //               router.unregisterRouteCallback(checkNotNull(routeCallback));
+  //             });
+  //   }
 
-    @Override
-    public boolean isSelectedOutputSuitableForPlayback() {
-      return isSuitableForPlaybackState == null ? true : isSuitableForPlaybackState.get();
-    }
+  //   @Override
+  //   public boolean isSelectedOutputSuitableForPlayback() {
+  //     return isSuitableForPlaybackState == null ? true : isSuitableForPlaybackState.get();
+  //   }
 
-    private static boolean isSelectedOutputSuitableForPlayback(MediaRouter2 router) {
-      int transferReason =
-          checkNotNull(router).getSystemController().getRoutingSessionInfo().getTransferReason();
-      boolean wasTransferInitiatedBySelf =
-          router.getSystemController().wasTransferInitiatedBySelf();
-      for (MediaRoute2Info routeInfo : router.getSystemController().getSelectedRoutes()) {
-        if (isRouteSuitableForMediaPlayback(
-            routeInfo, transferReason, wasTransferInitiatedBySelf)) {
-          return true;
-        }
-      }
-      return false;
-    }
+  //   private static boolean isSelectedOutputSuitableForPlayback(MediaRouter2 router) {
+  //     int transferReason =
+  //         checkNotNull(router).getSystemController().getRoutingSessionInfo().getTransferReason();
+  //     boolean wasTransferInitiatedBySelf =
+  //         router.getSystemController().wasTransferInitiatedBySelf();
+  //     for (MediaRoute2Info routeInfo : router.getSystemController().getSelectedRoutes()) {
+  //       if (isRouteSuitableForMediaPlayback(
+  //           routeInfo, transferReason, wasTransferInitiatedBySelf)) {
+  //         return true;
+  //       }
+  //     }
+  //     return false;
+  //   }
 
-    private static boolean isRouteSuitableForMediaPlayback(
-        MediaRoute2Info routeInfo, int transferReason, boolean wasTransferInitiatedBySelf) {
-      int suitabilityStatus = routeInfo.getSuitabilityStatus();
+  //   private static boolean isRouteSuitableForMediaPlayback(
+  //       MediaRoute2Info routeInfo, int transferReason, boolean wasTransferInitiatedBySelf) {
+  //     int suitabilityStatus = routeInfo.getSuitabilityStatus();
 
-      if (suitabilityStatus == MediaRoute2Info.SUITABILITY_STATUS_SUITABLE_FOR_MANUAL_TRANSFER) {
-        return (transferReason == RoutingSessionInfo.TRANSFER_REASON_SYSTEM_REQUEST
-                || transferReason == RoutingSessionInfo.TRANSFER_REASON_APP)
-            && wasTransferInitiatedBySelf;
-      }
+  //     if (suitabilityStatus == MediaRoute2Info.SUITABILITY_STATUS_SUITABLE_FOR_MANUAL_TRANSFER) {
+  //       return (transferReason == RoutingSessionInfo.TRANSFER_REASON_SYSTEM_REQUEST
+  //               || transferReason == RoutingSessionInfo.TRANSFER_REASON_APP)
+  //           && wasTransferInitiatedBySelf;
+  //     }
 
-      return suitabilityStatus == MediaRoute2Info.SUITABILITY_STATUS_SUITABLE_FOR_DEFAULT_TRANSFER;
-    }
-  }
+  //     return suitabilityStatus == MediaRoute2Info.SUITABILITY_STATUS_SUITABLE_FOR_DEFAULT_TRANSFER;
+  //   }
+  // }
 
   @RequiresApi(23)
   private static final class ImplApi23 implements SuitableOutputChecker {

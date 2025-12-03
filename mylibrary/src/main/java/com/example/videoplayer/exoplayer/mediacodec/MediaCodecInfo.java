@@ -55,6 +55,8 @@ import com.example.videoplayer.common.util.UnstableApi;
 import com.example.videoplayer.common.util.Util;
 import com.example.videoplayer.exoplayer.DecoderReuseEvaluation;
 import com.example.videoplayer.exoplayer.DecoderReuseEvaluation.DecoderDiscardReasons;
+
+import java.lang.reflect.Field;
 import java.util.Objects;
 
 /** Information about a {@link MediaCodec} for a given MIME type. */
@@ -148,7 +150,7 @@ public final class MediaCodecInfo {
    * Whether the codec supports "detached" surface mode where it is able to decode without an
    * attached surface. Only relevant for video codecs.
    *
-   * @see CodecCapabilities#FEATURE_DetachedSurface
+   * @see CodecCapabilities#
    */
   public final boolean detachedSurfaceSupported;
 
@@ -769,10 +771,17 @@ public final class MediaCodecInfo {
   }
 
   private static boolean isDetachedSurfaceSupported(@Nullable CodecCapabilities capabilities) {
-    return SDK_INT >= 35
-        && capabilities != null
-        && capabilities.isFeatureSupported(CodecCapabilities.FEATURE_DetachedSurface)
-        && !needsDetachedSurfaceUnsupportedWorkaround();
+    if (SDK_INT < 34 || capabilities == null || needsDetachedSurfaceUnsupportedWorkaround()) {
+      return false;
+    }
+    try {
+      Field field = CodecCapabilities.class.getField("FEATURE_DetachedSurface");
+      String featureDetachedSurface = (String) field.get(null);
+      return capabilities.isFeatureSupported(featureDetachedSurface);
+    } catch (Exception e) {
+      // Ignore if the feature doesn't exist
+      return false;
+    }
   }
 
   private static boolean areSizeAndRateSupported(

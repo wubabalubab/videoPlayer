@@ -86,6 +86,8 @@ import com.example.videoplayer.exoplayer.mediacodec.MediaCodecUtil.DecoderQueryE
 import com.example.videoplayer.exoplayer.source.MediaSource;
 import com.example.videoplayer.exoplayer.video.VideoRendererEventListener.EventDispatcher;
 import com.google.common.collect.ImmutableList;
+
+import java.lang.reflect.Field;
 import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -2243,10 +2245,16 @@ public class MediaCodecVideoRenderer extends MediaCodecRenderer
       // If codec is null, then the importance will be set when initializing the codec.
       return;
     }
-    if (SDK_INT >= 35) {
-      Bundle codecParameters = new Bundle();
-      codecParameters.putInt(MediaFormat.KEY_IMPORTANCE, max(0, -rendererPriority));
-      codec.setParameters(codecParameters);
+    if (SDK_INT >= 34) { // Changed to 34 since this feature was added in API 34
+      try {
+        Field field = MediaFormat.class.getField("KEY_IMPORTANCE");
+        String keyImportance = (String) field.get(null);
+        Bundle codecParameters = new Bundle();
+        codecParameters.putInt(keyImportance, max(0, -rendererPriority));
+        codec.setParameters(codecParameters);
+      } catch (Exception e) {
+        // Ignore if the key doesn't exist
+      }
     }
   }
 
@@ -2389,8 +2397,14 @@ public class MediaCodecVideoRenderer extends MediaCodecRenderer
       mediaFormat.setFeatureEnabled(CodecCapabilities.FEATURE_TunneledPlayback, true);
       mediaFormat.setInteger(MediaFormat.KEY_AUDIO_SESSION_ID, tunnelingAudioSessionId);
     }
-    if (SDK_INT >= 35) {
-      mediaFormat.setInteger(MediaFormat.KEY_IMPORTANCE, max(0, -rendererPriority));
+    if (SDK_INT >= 34) { // Changed to 34 since this feature was added in API 34
+      try {
+        Field field = MediaFormat.class.getField("KEY_IMPORTANCE");
+        String keyImportance = (String) field.get(null);
+        mediaFormat.setInteger(keyImportance, max(0, -rendererPriority));
+      } catch (Exception e) {
+        // Ignore if the key doesn't exist
+      }
     }
     return mediaFormat;
   }
