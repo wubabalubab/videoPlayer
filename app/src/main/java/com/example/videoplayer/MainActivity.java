@@ -3,6 +3,7 @@ package com.example.videoplayer;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -70,6 +71,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tvStatus = findViewById(R.id.tv_status);
         tvVideoInfo = findViewById(R.id.tv_video_info);
 
+        // 新增音频播放按钮
+        Button btnAudioPlayer = findViewById(R.id.btn_audio_player);
+
         // 设置点击监听器
         tvLoadUrl.setOnClickListener(this);
         btnPlay.setOnClickListener(this);
@@ -78,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnSeekForward.setOnClickListener(this);
         btnSeekBackward.setOnClickListener(this);
         btnSwitchUrl.setOnClickListener(this);
+        btnAudioPlayer.setOnClickListener(this);
 
         // 初始化测试模块控件状态
         updateTestControlsState(false);
@@ -255,6 +260,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 updateStatus("切换到: " + (usingFirstUrl ? "URL1" : "URL2"));
                 tvVideoInfo.setText("视频: " + (usingFirstUrl ? "URL1" : "URL2") + "\n请点击'加载视频'");
             }
+        } else if (id == R.id.btn_audio_player) {
+            // 跳转到音频播放界面
+            Intent intent = new Intent(MainActivity.this, AudioPlayerActivity.class);
+            startActivity(intent);
         }
     }
 
