@@ -43,8 +43,8 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.0.0'
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.1'
-    implementation project(path: ':mylibrary')
-//    implementation(name: 'mylibrary-release', ext: 'aar')
+    implementation project(path: ':videoPlayerLib')
+
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.3.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.7.0'

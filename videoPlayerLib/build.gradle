@@ -29,6 +29,7 @@ android {
     }
 }
 
+
 dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.0.0'
@@ -72,3 +73,26 @@ task listDependencySize {
         }
     }
 }
+
+afterEvaluate {
+    android.libraryVariants.all { variant ->
+        if (variant.buildType.name == "release") {
+
+            def versionName = android.defaultConfig.versionName ?: "1.0.0"
+            def outDir = file("${rootProject.projectDir}/local-aar")
+            def outName = "${project.name}-${versionName}-release.aar"
+
+            variant.packageLibraryProvider.configure { task ->
+                task.doLast {
+                    copy {
+                        from task.archiveFile.get().asFile
+                        into outDir
+                        rename { outName }
+                    }
+                    println(" Export AAR -> ${outDir}/${outName}")
+                }
+            }
+        }
+    }
+}
+
