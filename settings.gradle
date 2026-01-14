@@ -17,4 +17,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "videoplayer"
 include ':app'
-include ':mylibrary'
+include ':videoPlayerLib'
